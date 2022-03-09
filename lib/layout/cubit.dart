@@ -77,10 +77,11 @@ class MovieCubit extends Cubit<MovieStates> {
   }
 
   List<MovieModel> popular = [];
+  Map<int , bool> favourite ={};
   MovieResultModel? movieModel;
   void getPopularMovie()
   {
-    emit(PopularMovieLoadingState());
+   // emit(PopularMovieLoadingState());
     DioHelper.getData(
         url: 'movie/popular',
         query: {
@@ -88,6 +89,9 @@ class MovieCubit extends Cubit<MovieStates> {
         }).then((value) {
           movieModel = MovieResultModel.fromJson(value.data);
           popular = movieModel!.results!;
+        /*  popular.forEach((element) {
+            element.id : element.
+          });*/
          // print(popular);
           emit(PopularMovieSuccessState());
         }).catchError((error) {

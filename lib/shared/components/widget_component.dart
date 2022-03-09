@@ -66,7 +66,7 @@ Widget buildMovie (MovieModel model,context) => InkWell(
                         backgroundColor: Colors.grey.withOpacity(.3),
                         child: IconButton(
                           onPressed: () {
-                            //var cubit = MovieCubit.get(context);
+                            print(model.id);
                           },
                           icon: const Icon(Icons.favorite_outline,color: Colors.black),
                         ),
