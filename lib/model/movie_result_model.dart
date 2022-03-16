@@ -21,7 +21,7 @@ class MovieResultModel {
     totalResults = json['total_results'];
   }
 
-  /*Map<String, dynamic> toJson() {
+  Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['page'] = page;
     if (this.results != null) {
@@ -30,7 +30,7 @@ class MovieResultModel {
     data['total_pages'] = this.totalPages;
     data['total_results'] = this.totalResults;
     return data;
-  }*/
+  }
 }
 
 

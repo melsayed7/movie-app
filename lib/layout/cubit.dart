@@ -17,7 +17,8 @@ class MovieCubit extends Cubit<MovieStates> {
 
   int currentIndex = 0;
 
-  List<BottomNavigationBarItem> bottomItems = [
+  List<BottomNavigationBarItem> bottomItems =
+  [
     BottomNavigationBarItem(
       icon: Icon(
         Icons.movie,
@@ -39,7 +40,7 @@ class MovieCubit extends Cubit<MovieStates> {
         Icons.movie,
         color: Colors.black,
       ),
-      label: 'Trending',
+      label: 'UpComing',
       backgroundColor: Colors.blue,
     ),
     BottomNavigationBarItem(
@@ -55,11 +56,11 @@ class MovieCubit extends Cubit<MovieStates> {
   List<Widget> Screens = [
     PopularScreen(),
     TopRateScreen(),
-    TrendScreen(),
+    UpComingScreen(),
     FavouriteScreen(),
   ];
 
-  void changeBottomNavBar(int index) {
+  void changeBottomNavBar(int index,) {
     currentIndex = index;
     if (index == 0) {
       getPopularMovie();
@@ -68,7 +69,7 @@ class MovieCubit extends Cubit<MovieStates> {
       getTopRateMovie();
     }
     if (index == 2) {
-      getTrendMovie();
+      getUpComingMovie();
     }
     if (index == 3) {
       FavouriteScreen();
@@ -77,31 +78,29 @@ class MovieCubit extends Cubit<MovieStates> {
   }
 
   List<MovieModel> popular = [];
-  Map<int , bool> favourite ={};
   MovieResultModel? movieModel;
+
   void getPopularMovie()
   {
-   // emit(PopularMovieLoadingState());
+    // emit(PopularMovieLoadingState());
     DioHelper.getData(
         url: 'movie/popular',
         query: {
           'api_key': '58b29b46048441216fa7c3562cb5eba9',
-        }).then((value) {
-          movieModel = MovieResultModel.fromJson(value.data);
-          popular = movieModel!.results!;
-        /*  popular.forEach((element) {
-            element.id : element.
-          });*/
-         // print(popular);
-          emit(PopularMovieSuccessState());
-        }).catchError((error) {
-          print(error.toString());
-          emit(PopularMovieErrorState(error));
-         });
+        }
+        ).then((value) {
+      movieModel = MovieResultModel.fromJson(value.data);
+      popular = movieModel!.results!;
+      emit(PopularMovieSuccessState());
+    }).catchError((error) {
+      print(error.toString());
+      emit(PopularMovieErrorState(error));
+    });
   }
 
 
   List<MovieModel> topRated = [];
+
   void getTopRateMovie()
   {
     emit(TopRateMovieLoadingState());
@@ -119,23 +118,66 @@ class MovieCubit extends Cubit<MovieStates> {
     });
   }
 
-  List<MovieModel> trend = [];
-  void getTrendMovie()
+  List<MovieModel> upComing = [];
+
+  void getUpComingMovie()
   {
-    emit(TrendMovieLoadingState());
+    emit(UpComingMovieLoadingState());
     DioHelper.getData(
-        url: 'trending/all/day',
+        url: 'movie/upcoming',
         query: {
           'api_key': '58b29b46048441216fa7c3562cb5eba9',
         }).then((value) {
       movieModel = MovieResultModel.fromJson(value.data);
-      trend = movieModel!.results!;
-      emit(TrendMovieSuccessState());
+      upComing = movieModel!.results!;
+      emit(UpComingMovieSuccessState());
     }).catchError((error) {
       print(error.toString());
-      emit(TrendMovieErrorState(error));
+      emit(UpComingMovieErrorState(error));
     });
   }
+
+  List<MovieModel> favoriteList = [];
+  void addFavorite(int movieId)
+  {
+    var isExist = favoriteList.indexWhere((element) => element.id == movieId);
+    print(isExist);
+    if(isExist >= 0)
+      {
+        favoriteList.removeAt(isExist);
+      }
+    else
+      {
+        favoriteList.add(movieModel!.results!.firstWhere((element) => element.id == movieId));
+      }
+    print(favoriteList);
+  }
+
+  bool isFavorite(int movieId)
+  {
+   return  favoriteList.any((element) => element.id == movieId );
+  }
+
+  /*FavoriteModel? favoritesModel ;
+  Map<int , bool> favorite = {};
+  void getFavourite (int? movieId)
+  {
+    DioHelper.getData(
+        url: 'movie/$movieId',
+        query: {
+          'api_key': '58b29b46048441216fa7c3562cb5eba9',
+        })
+        .then((value){
+      favoritesModel = FavoriteModel.fromJson(value.data);
+      print(favoritesModel?.rated);
+      emit(FavoriteMovieSuccessState());
+    })
+        .catchError((error){
+          emit(FavoriteMovieErrorState(error.toString()));
+          print(error.toString());
+    });
+
+  }*/
 
 
 }

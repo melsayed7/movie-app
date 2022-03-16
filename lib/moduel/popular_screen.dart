@@ -10,24 +10,25 @@ class PopularScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocConsumer<MovieCubit , MovieStates>(
-      listener: (context , index){},
-      builder: (context , state){
+    return BlocConsumer<MovieCubit, MovieStates>(
+      listener: (context, index) {},
+      builder: (context, state) {
         var cubit = MovieCubit.get(context);
         return ConditionalBuilder(
-          condition: cubit.movieModel != null ,
-          builder: (context)=> ListView.separated(
+          condition: cubit.movieModel != null,
+          builder: (context) => ListView.separated(
             itemBuilder: (context, index) {
-              return buildMovie(cubit.popular[index],context);
+              return buildMovie(
+                  cubit.popular[index], context, cubit.popular[index].id);
             },
-            separatorBuilder: (context, index) => const Divider(thickness: 1,color:Colors.black),
-            itemCount: cubit.popular.length ,
+            separatorBuilder: (context, index) =>
+                const Divider(thickness: 1, color: Colors.black),
+            itemCount: cubit.popular.length,
           ),
-          fallback:(context)=> const Center(child: CircularProgressIndicator()),
+          fallback: (context) =>
+              const Center(child: CircularProgressIndicator()),
         );
       },
     );
   }
-
-
 }

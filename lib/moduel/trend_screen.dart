@@ -6,8 +6,8 @@ import '../layout/cubit.dart';
 import '../layout/states.dart';
 import '../shared/components/widget_component.dart';
 
-class TrendScreen extends StatelessWidget {
-  const TrendScreen({Key? key}) : super(key: key);
+class UpComingScreen extends StatelessWidget {
+  const UpComingScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,10 +19,10 @@ class TrendScreen extends StatelessWidget {
           condition: cubit.movieModel != null ,
           builder: (context)=> ListView.separated(
             itemBuilder: (context, index) {
-              return buildMovie(cubit.trend[index],context);
+              return buildMovie(cubit.upComing[index],context,cubit.upComing[index].id);
             },
             separatorBuilder: (context, index) => const Divider(thickness: 1,color:Colors.black),
-            itemCount: cubit.trend.length ,
+            itemCount: cubit.upComing.length ,
           ),
           fallback:(context)=> const Center(child: CircularProgressIndicator()),
         );

@@ -19,7 +19,7 @@ class TopRateScreen extends StatelessWidget {
             condition: cubit.movieModel != null ,
             builder: (context)=> ListView.separated(
               itemBuilder: (context, index) {
-                  return buildMovie(cubit.topRated[index],context,);
+                  return buildMovie(cubit.topRated[index],context,cubit.topRated[index].id);
               },
               separatorBuilder: (context, index) => const Divider(thickness: 1,color:Colors.black),
               itemCount: cubit.topRated.length ,

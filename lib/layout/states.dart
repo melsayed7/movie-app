@@ -24,12 +24,12 @@ class TopRateMovieErrorState extends MovieStates {
   TopRateMovieErrorState(this.error);
 }
 
-class TrendMovieLoadingState extends MovieStates {}
+class UpComingMovieLoadingState extends MovieStates {}
 
-class TrendMovieSuccessState extends MovieStates {}
+class UpComingMovieSuccessState extends MovieStates {}
 
-class TrendMovieErrorState extends MovieStates {
+class UpComingMovieErrorState extends MovieStates {
 
   final String error ;
-  TrendMovieErrorState(this.error);
+  UpComingMovieErrorState(this.error);
 }
